@@ -1,0 +1,111 @@
+@charset "UTF-8";
+
+body {
+    font-family: sans-serif;
+    padding: 20px;
+}
+h1 { 
+    color: rgb(65, 94, 155);
+    text-shadow: .2em .2em .2em silver;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    padding: 5px;
+}
+h2 {
+    background-image: linear-gradient(45deg, rgb(65, 94, 155) 60%, white);
+    color: white;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    padding: 5px;
+    font-weight: bold;
+    line-height: 1.2em;
+}
+h3 {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    color: rgb(78, 77, 77);
+}
+address{
+    font-family: 'Courier New', Courier, monospace;
+    font-style: normal;
+    line-height: 0em;
+}
+li#lista-videos {
+    list-style-type: square;
+    list-style-position: outside;
+}
+code {
+    font-size: large;
+}
+/*tabelas de comandos gerais dos labs*/
+.tabela-comandos {
+    font-family: 'Courier New', Courier, monospace;
+    border-collapse: collapse;
+    margin: 10px 0;
+    width: 1400px;
+    min-width: 500px;
+}
+.tabela-comandos thead tr {
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 1.3em;
+    text-align: left;
+    background-color: rgb(200, 200, 200);
+    border: solid 1px rgb(109, 109, 109);
+}
+.tabela-comandos thead th {
+    border: solid 1px rgb(109, 109, 109);
+    padding-left: 5px;
+}
+.tabela-comandos tbody td:first-of-type {
+    width: 400px;
+}
+.tabela-comandos tbody td {
+    border: solid 1px rgb(109, 109, 109);
+    padding: 3px;
+    padding-left: 4px;
+}
+
+/*Essas são as tabelas de dispositivos da topologia*/
+.tabela-complementar {
+    font-family: monospace;
+    font-size: 1.05em;
+    text-align: center;
+    border-collapse: collapse;
+    border: solid 1px rgb(109, 109, 109);
+    box-shadow: 5px 5px 3px rgb(124, 124, 124);
+    width: 700px;
+}
+.tabela-complementar thead tr {
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 1.1em;
+    text-align: center;
+    background-color: rgb(200, 200, 200);
+    border: solid 1px rgb(109, 109, 109);
+}
+.tabela-complementar tbody {
+    font-size: 1.1em;
+}
+.tabela-complementar tbody td {
+    border: solid 1px rgb(109, 109, 109);
+    padding: 3px;
+    padding-left: 4px;
+}
+a {
+    text-decoration: none;
+    color: rgb(28, 89, 196);
+    line-height: 1.5em;
+}
+a:hover{
+    font-weight: bolder;
+}
+a:visited {
+    text-decoration: none;
+}
+figcaption {
+    /*text-indent: 20rem;*/
+    font-style: italic;
+    margin-left: 500px;
+}
+img {
+    display: block; margin-left: 100px
+}
