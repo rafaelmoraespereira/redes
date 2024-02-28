@@ -9,26 +9,32 @@ Objetivo: Estabelecer o tom e a direção para o período que se inicia, destaca
 
 A02 - C01 Introdução a Redes e a Camada Física (1/6)
 Objetivos: Apresentar o contexto histórico da evolução da Internet e compreender as principais funções, protocolos e equipamentos das camadas do modelo TCP/IP.
+Conteúdo: Tópico 1 - A Evolução da Internet.
 Procedimentos Metodológicos: Aula expositiva, dialógica, com problematização e discussões.
 
 A03 - C01 Introdução a Redes e a Camada Física (2/6)
 Objetivos: Apresentar o contexto histórico da evolução da Internet e compreender as principais funções, protocolos e equipamentos das camadas do modelo TCP/IP.
+Conteúdo: Tópico 2 - Algumas definições Importantes.
 Procedimentos Metodológicos: Aula expositiva, dialógica, com problematização e discussões.
 
 A04 - C01 Introdução a Redes e a Camada Física (3/6)
 Objetivos: Apresentar o contexto histórico da evolução da Internet e compreender as principais funções, protocolos e equipamentos das camadas do modelo TCP/IP.
+Conteúdo: Tópico 3 - Introdução ao Modelo OSI & Tópico 4 - A Interação entre Camadas.
 Procedimentos Metodológicos: Aula expositiva, dialógica, com problematização e discussões.
 
 A05 - C01 Introdução a Redes e a Camada Física (4/6)
 Objetivos: Apresentar o contexto histórico da evolução da Internet e compreender as principais funções, protocolos e equipamentos das camadas do modelo TCP/IP.
+Conteúdo: Tópico 5 - Redes de Acesso & Tópico 6 - As Funções de Cada Camada.
 Procedimentos Metodológicos: Aula expositiva, dialógica, com problematização e discussões.
 
 A06 - C01 Introdução a Redes e a Camada Física (5/6)
 Objetivos: Apresentar o contexto histórico da evolução da Internet e compreender as principais funções, protocolos e equipamentos das camadas do modelo TCP/IP.
+Conteúdo: Tópico 7 - Meios de Transmissão.
 Procedimentos Metodológicos: Aula expositiva, dialógica, com problematização e discussões.
 
 A07 - C01 Introdução a Redes e a Camada Física (6/6)
 Objetivos: Apresentar o contexto histórico da evolução da Internet e compreender as principais funções, protocolos e equipamentos das camadas do modelo TCP/IP.
+Conteúdo: Tópico 7 - Meios de Transmissão.
 Procedimentos Metodológicos: Aula expositiva, dialógica, com problematização e discussões.
 
 A08 - Aula para tirar dúvidas
@@ -39,28 +45,55 @@ A09 - Aula para tirar dúvidas
 Objetivos: Identificar lacunas de compreensão e proporcionar aos alunos um ambiente propício para esclarecer questionamentos e consolidar conceitos previamente abordados.
 Procedimentos Metodológicos: Oferecer explicações claras, realização de exercícios e exemplos pertinentes, visando promover a aprendizagem efetiva.
 
-A10 - Avaliação Teórica (30 pontos)
+A10 - Avaliação Teórica 01 (30 pontos)
 Conteúdo: Capítulo 01 - Introdução a Redes e a Camada Física
 Objetivo: Medir o progresso e o desempenho dos alunos em relação aos objetivos de aprendizagem estabelecidos, fornecendo feedback aos alunos e aos educadores sobre o nível de compreensão e habilidades adquiridas.
 
 ### C02 A Camada de Enlace (20 h/a ~ 10 aulas)
 
 A11 - C02 Camada de Enlace (1/6)
-Objetivos: Compreender os conceitos básicos de funcionamento e configuração dos ativos de redes numa LAN, e as nomenclaturas usualmente utilizadas nos equipamentos.
+Objetivos: Compreender as funções da camada de enlace, entender o funcionamento dos métodos de detecção de erros, assim como dos métodos de acesso ao meio de transmissão. Além disso analisar o funcionamento de encaminhamento e filtragem de frames em equipamentos de camada de enlace, assim como a estrutura dos endereços envolvidos.
+Conteúdo: Tópico 1 - Introdução à Camada de Enlace.
 Procedimentos Metodológicos: Aula expositiva, dialógica, com problematização e discussões.
 
 A12 - C02 Camada de Enlace (2/6)
+Objetivos: Compreender as funções da camada de enlace, entender o funcionamento dos métodos de detecção de erros, assim como dos métodos de acesso ao meio de transmissão. Além disso analisar o funcionamento de encaminhamento e filtragem de frames em equipamentos de camada de enlace, assim como a estrutura dos endereços envolvidos.
+Conteúdo: Tópico 2 - Técnicas de Correção e Detecção de Erros.
+Procedimentos Metodológicos: Aula expositiva, dialógica, com problematização e discussões.
+
 A13 - C02 Camada de Enlace (3/6)
+Objetivos: Compreender as funções da camada de enlace, entender o funcionamento dos métodos de detecção de erros, assim como dos métodos de acesso ao meio de transmissão. Além disso analisar o funcionamento de encaminhamento e filtragem de frames em equipamentos de camada de enlace, assim como a estrutura dos endereços envolvidos.
+Conteúdo: Tópico 2 - Técnicas de Correção e Detecção de Erros.
+Procedimentos Metodológicos: Aula expositiva, dialógica, com problematização e discussões.
+
 A14 - C02 Camada de Enlace (4/6)
+Objetivos: Compreender as funções da camada de enlace, entender o funcionamento dos métodos de detecção de erros, assim como dos métodos de acesso ao meio de transmissão. Além disso analisar o funcionamento de encaminhamento e filtragem de frames em equipamentos de camada de enlace, assim como a estrutura dos endereços envolvidos.
+Conteúdo: Tópico 3 - Enlaces e Protocolos de Acesso Múltiplo.
+Procedimentos Metodológicos: Aula expositiva, dialógica, com problematização e discussões.
+
 A15 - C02 Camada de Enlace (5/6)
+Objetivos: Compreender as funções da camada de enlace, entender o funcionamento dos métodos de detecção de erros, assim como dos métodos de acesso ao meio de transmissão. Além disso analisar o funcionamento de encaminhamento e filtragem de frames em equipamentos de camada de enlace, assim como a estrutura dos endereços envolvidos.
+Conteúdo: Tópico 4 - Redes Locais Comutadas.
+Procedimentos Metodológicos: Aula expositiva, dialógica, com problematização e discussões.
+
 A16 - C02 Camada de Enlace (6/6)
+Objetivos: Compreender as funções da camada de enlace, entender o funcionamento dos métodos de detecção de erros, assim como dos métodos de acesso ao meio de transmissão. Além disso analisar o funcionamento de encaminhamento e filtragem de frames em equipamentos de camada de enlace, assim como a estrutura dos endereços envolvidos.
+Conteúdo: Tópico 5 - Switches em Funcionamento.
+Procedimentos Metodológicos: Aula expositiva, dialógica, com problematização e discussões.
 
 A17 - Aula para tirar dúvidas
 Procedimentos Metodológicos: Participação durante a aula, e resolução de lista de exercícios.
 
-A18 - Avaliação Teórica (30 pontos)
-A19 - Avaliação Prática (60 pontos)
-A20 - Avaliação Prática (60 pontos)
+A18 - Avaliação Teórica 02 (30 pontos)
+Conteúdo: C02 Camada de Enlace.
+Objetivo: Medir o progresso e o desempenho dos alunos em relação aos objetivos de aprendizagem estabelecidos, fornecendo feedback aos alunos e aos educadores sobre o nível de compreensão e habilidades adquiridas.
+
+A19 - Aula para tirar dúvidas
+Procedimentos Metodológicos: Participação durante a aula, e resolução de lista de exercícios.
+
+A20 - Avaliação Prática (40 pontos)
+Conteúdo: C01 Introdução a Redes e a Camada Física & C02 Camada de Enlace.
+Objetivo: Medir o progresso e o desempenho dos alunos em relação aos objetivos de aprendizagem estabelecidos, fornecendo feedback aos alunos e aos educadores sobre o nível de compreensão e habilidades adquiridas.
 
 ### Recursos Complementares
 
