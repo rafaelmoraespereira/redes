@@ -109,9 +109,43 @@ Objetivo: Medir o progresso e o desempenho dos alunos em relação aos objetivos
 
 ## BIMESTRE 2
 
-### C03 Protocolo IPv4 (10 h/a)
+### C03 A Camada de Rede (14 h/a)
 
-### C04 Cálculo de Endereçamento IPv4 (30 h/a)
+A21 - C03 A Camada de Rede (1/6)
+Objetivo: Discutir o endereçamento lógico com e sem classes. Analisar todos os campos que compõem o protocolo IPv4, assim como compreender o funcioanemnto dos mecanismos de entrega e roteamento usados na Internet.
+Conteúdo: Tópico 1 - Endereçamento Lógico.
+Procedimentos Metodológicos: Aula expositiva, dialógica, com problematização e discussões.
+
+A22 - C03 A Camada de Rede (2/6)
+Objetivo: Discutir o endereçamento lógico com e sem classes. Analisar todos os campos que compõem o protocolo IPv4, assim como compreender o funcioanemnto dos mecanismos de entrega e roteamento usados na Internet.
+Conteúdo: Tópico 1 - Endereçamento Lógico.
+Procedimentos Metodológicos: Aula expositiva, dialógica, com problematização e discussões.
+
+A23 - C03 A Camada de Rede (3/6)
+Objetivo: Discutir o endereçamento lógico com e sem classes. Analisar todos os campos que compõem o protocolo IPv4, assim como compreender o funcioanemnto dos mecanismos de entrega e roteamento usados na Internet.
+Conteúdo: Tópico 2 - Endereçamentos Públicos e Privados.
+Procedimentos Metodológicos: Aula expositiva, dialógica, com problematização e discussões.
+
+A24 - C03 A Camada de Rede (4/6)
+Objetivo: Discutir o endereçamento lógico com e sem classes. Analisar todos os campos que compõem o protocolo IPv4, assim como compreender o funcioanemnto dos mecanismos de entrega e roteamento usados na Internet.
+Conteúdo: Tópico 3 - Protocolo IPv4.
+Procedimentos Metodológicos: Aula expositiva, dialógica, com problematização e discussões.
+
+A25 - C03 A Camada de Rede (5/6)
+Objetivo: Discutir o endereçamento lógico com e sem classes. Analisar todos os campos que compõem o protocolo IPv4, assim como compreender o funcioanemnto dos mecanismos de entrega e roteamento usados na Internet.
+Conteúdo: Tópico 3 - Protocolo IPv4.
+Procedimentos Metodológicos: Aula expositiva, dialógica, com problematização e discussões.
+
+A26 - C03 A Camada de Rede (6/6)
+Objetivo: Discutir o endereçamento lógico com e sem classes. Analisar todos os campos que compõem o protocolo IPv4, assim como compreender o funcioanemnto dos mecanismos de entrega e roteamento usados na Internet.
+Conteúdo: Tópico 4 - Encaminhamento e Roteamento.
+Procedimentos Metodológicos: Aula expositiva, dialógica, com problematização e discussões.
+
+A27 - Avaliação Teórica 01 (30 pontos)
+Conteúdo: C03 A Camada de Rede.
+Objetivo: Medir o progresso e o desempenho dos alunos em relação aos objetivos de aprendizagem estabelecidos, fornecendo feedback aos alunos e aos educadores sobre o nível de compreensão e habilidades adquiridas.
+
+### C04 Cálculo de Endereçamento IPv4 (26 h/a)
 
 ## BIMESTRE 3
 
@@ -121,6 +155,6 @@ Objetivo: Medir o progresso e o desempenho dos alunos em relação aos objetivos
 
 ## BIMESTRE 4
 
-### C07 Intrução às Redes Sem Fio
+### C07 Introdução às Redes Sem Fio
 
 ### C08 Segurança em Redes de Computadores
