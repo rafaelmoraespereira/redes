@@ -9,6 +9,7 @@ Objetivo: Estabelecer o tom e a direção para o período que se inicia, destaca
 
 A02 - C01 Introdução a Redes e a Camada Física (1/6)
 Objetivos: Apresentar o contexto histórico da evolução da Internet e compreender as principais funções, protocolos e equipamentos das camadas do modelo TCP/IP.
+
 Conteúdo: Tópico 1 - A Evolução da Internet.
 Procedimentos Metodológicos: Aula expositiva, dialógica, com problematização e discussões.
 
