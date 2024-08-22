@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Laboratório de Redes envolvendo Switches">
+    <meta name="keywords" content="lab ccna redes network router">
+    <meta http-equiv="author" content="Rafael de Moraes">
+    <link rel="stylesheet" href="../styles/style-labs.css">
+    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+    <title>LAB 02 B04-C01</title>
+</head>
+
+<body>
+
+<header>
+    <nav>
+        <ul>
+            <li><a href="../index.html">Menu</a></li>
+            <li><a href="lab_b04-c01_01.html">Anterior</a></li>
+            <li><a href="lab_b04-c01_03.html">Próximo</a></li>
+            <li><a href="http://www.github.com/rafaelmoraespereira" rel="external" target="_blank">Sobre</a></li>
+        </ul>
+    </nav>
+    <h1>
+        <h2>LABORATÓRIO DE REDES B04-C01</h2>
+        <p>Vamos colocar a mão na massa! Chegou a hora da prática de laboratório de redes.</p>
+    </h1>
+</header>
+
+<main>
+
+<section>
+    <h1>Introdução</h1>
+    <p>Esse laboratório faz parte das aulas do Bimestre 4, Capítulo 01 - Operando Roteadores. As aulas teóricas que fundamentam essa prática podem ser encontradas nos links abaixo:</p>
+    <ul>
+        <li><a href="https://youtu.be/pnh7w8LW1Yc" target="_blank" rel="external">C01 - Parte 1/2 - Operando Roteadores</a></li>
+        <li><a href="https://youtu.be/gQXYnYrhsBw" target="_blank" rel="external">C01 - Parte 2/2 - Operando Roteadores</a></li>
+    </ul>
+</section>
+
+<section>
+    <h1>Objetivo</h1>
+    <p>Monte corretamente a topologia atentando ao uso adequado dos equipamentos, cabos e portas conforme especificados. Realize todas as configurações que julgue necessárias para o funciomento adequado da lógica proposta na parte de Tarefas. Ao final teste afim de garantir o correto funcionamento.</p>
+</section>
+
+<section id="topologia_lab">
+    <h1>Topologia do Lab</h1>
+    <figure>
+        <img src="../images/labs/b04-lab02-topologia.png" alt="Topologia do Lab 02" title="Topologia C01 Operando Roteadores - Lab 02" width=40% />
+        <figcaption>Topologia do Lab 02</figcaption>
+    </figure>
+</section>
+
+<section id="sumario">
+    <h1>Sumário de Comandos</h1>
+    <table class="tabela-comandos">
+        <thead>
+            <th scope="col">Comando</th>
+            <th scope="col">Modo/Motivo/Descrição</th>
+        </thead>
+        <tr>
+            <td><strong><code>enable secret</code></strong> <em>senha-de-password</em></td>
+            <td>Comando global. Ajusta a senha do swich que é necessária par que qualquer usuário acesse o modo enable.</td>
+        </tr>
+        <tr>
+            <td><strong><code>line console 0</code></strong></td>
+            <td>Comando global que muda o contexto para o modo de configuração de console.</td>
+        </tr>
+        <tr>
+            <td><strong><code>line vty 0 15</code></strong></td>
+            <td>Comando global que muda o contexto para o modo de configuração vty para o escolo de linhas vty no comando.</td>
+        </tr>
+        <tr>
+            <td><strong><code>login</code></strong></td>
+            <td>Modo de configuração de linha (console e vty). Diz ao IOS para pedir uma senha.</td>
+        </tr>
+        <tr>
+            <td><strong><code>login local</code></strong></td>
+            <td>Modo de configuração de console e vty. Avisa ao IOS para mostrar a tela de usuário e senha, a serem verificados com os comandos de configuração global <strong><code>username</code></strong> localmente configurados no switch ou roteador.</td>
+        </tr>
+        <tr>
+            <td><strong><code>password</code> </strong><i>valor-password</i></td>
+            <td>Modo de configuração de linha (console e vty). Lista a senha necessária se o comando <strong><code>login</code></strong> estiver configurado.</td>
+        </tr>
+        <tr>
+            <td><strong><code>interface</code></strong> <i>digitar-o-número-da-porta</i></td>
+            <td>Comando global que altera o contexto para o modo interaface - por exemplo, <strong><code>interface FastEthernet 0/1</code></strong>.</td>
+        </tr>
+        <tr>
+            <td><strong><code>hostname</code></strong> <i>nome</i></td>
+            <td>Comando global que ajusta o nome de servidor do switch, que também é usado como a primeira parte do prompt de comando do switch.</td>
+        </tr>
+        <tr>
+            <td><strong><code>exit</code></strong></td>
+            <td>Retorna ao modo anterior no modo de configuração.</td>
+        </tr>
+        <tr>
+            <td><strong><code>end</code></strong></td>
+            <td>Encerra o modo de configuração e retorna ao modo ativo de qualquer um dos submodos de configuração.</td>
+        </tr>
+        <tr>
+            <td><code>Ctrl+Z</code></td>
+            <td>Não é um comando, mas uma combinação de duas teclas que, se pressionadas juntas, têm a mesma função do comando <strong><code>end</code></strong>.</td>
+        </tr>
+        <tr>
+            <td><strong><code>username</code></strong> <em>nome-usuário</em> <strong><code>password</code></strong> <em>senha-do-usuário</em></td>
+            <td>Comando global. Define um de múltiplos nomes de usuário possíveis e senhas associadas, usados para autenticação do usuário. Usado quando o comando de configuração de linha <strong><code>login local</code></strong> for usado.</td>
+        </tr>
+        <tr>
+            <td><strong><code>crypto key generate rsa [modulus</code></strong> 360..2048<strong><code>]</code></strong></td>
+            <td>Comando global. Cria e armazena (em uma localização escondida na memória flash) as chaves neessárias pelo SSH.</td>
+        </tr>
+        <tr>
+            <td><strong><code>transport input {telnet | ssh | all | none}</code></strong></td>
+            <td>Modo de configuração de linha vty. Define se o acesso Telnet e/ou SSH é permitido no switch. Ambos os valores podem ser configurados em um comando para permitir tanto o acesso Telnet quanto o SSH (padrão).</td>
+        </tr>
+    </table>
+    
+    <table class="tabela-comandos">
+        <thead>
+            <th scope="col">Comando</th>
+            <th scope="col">Modo/Motivo/Descrição</th>
+        </thead>
+        <tr>
+            <td><strong><code>ip address</code></strong> <em>endereço máscara</em></td>
+            <td>Subcomando de interface que ajusta o endereço IPv4 e a máscara do roteador.</td>
+        </tr>
+        <tr>
+            <td><strong><code>logging synchronous</code></strong></td>
+            <td>Modo de console ou vty. Avisa ao IOS para enviar mensagens de log para o usuário em intervalos naturais de comandos, em vez de interromper uma linha de resultado.</td>
+        </tr>
+        <tr>
+            <td><strong><code>[no] logging console</code></strong></td>
+            <td>Comando global que desativa ou ativa a exibição de mensagens no console.</td>
+        </tr>
+        <tr>
+            <td><strong><code>exec-timeout minutes</code></strong> <em>[segundos]</em></td>
+            <td>Modo de console ou vty. Ajusta o cronômetro de inatividade para que, depois de definido o período de inatividade, o IOS feche a sessão do usuário atual.</td>
+        </tr>
+    </table>
+     
+    <table class="tabela-comandos">
+        <thead>
+            <th scope="col">Comando</th>
+            <th scope="col">Modo/Motivo/Descrição</th>
+        </thead>
+        <tr>
+            <td><strong><code>show interfaces <em>[digite o número]</em></code></strong></td>
+            <td>Lista um grande grupo de mensagens informativas sobre cada interface, ou sobre a interface especificada.</td>
+        </tr>
+        <tr>
+            <td><strong><code>show ip interface brief</code></strong></td>
+            <td>Lista uma única linha de informações sobre cada interface, incluindo o endereço IP, status de linha, protocolo e o método com o qual o endereço foi configurado (manual ou DHCP).</td>
+        </tr>
+        <tr>
+            <td><strong><code>show controllers <em>[digite o número]</em></code></strong></td>
+            <td>Lista diversas linhas de informação por interface, ou para uma interface, para o controlador de hardware da interface. Em interfaces seriais, esse comando identifica o cabo como ou DCE ou DTE.</td>
+        </tr>
+        <tr>
+            <td><strong><code>show version</code></strong></td>
+            <td>Lista a versão do IOS rodando atualmente no roteador, além de uma variedade de outros fatos sobre o hardware e software atualmente instalados no roteador.</td>
+        </tr>
+        <tr>
+            <td><strong><code>show running-config</code></strong></td>
+            <td>Lista a configuração em uso.</td>
+        </tr>
+    </table>
+</section>
+
+
+<section>
+    <h1>Endereços IP</h1>
+    <table class="tabela-complementar">
+        <thead>
+            <th scope="col"><strong>Dispositivo</strong></th>
+            <th scope="col"><strong>Endereço IP	</strong></th>
+            <th scope="col"><strong>Máscara de Subrede	</strong></th>
+            <th scope="col"><strong>Default Gateway</strong></th>
+        </thead>
+        <tr>
+            <td>RT-01</td>
+            <td>192.168.0.1</td>
+            <td>255.255.255.0</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>SW-01</td>
+            <td>192.168.0.100</td>
+            <td>255.255.255.0</td>
+            <td>192.168.0.1</td>
+        </tr>
+        <tr>
+            <td>PC 0</td>
+            <td>192.168.0.5</td>
+            <td>255.255.255.0</td>
+            <td>192.168.0.1</td>
+        </tr>
+    </table>
+</section>
+
+<section id="tarefas_lab">
+    <h1>Tarefas do Lab 02</h1>
+    <h2>Tarefa 1: Monte a Topologia</h2>
+    <ol>
+        <li>Insira 01 Router (modelo 2901), 01 Switch (modelo 2960) e 01 computador (qualquer dos modelos disponíveis) no simulador.</li>
+        <li>Conecte os cabos adequados nas interfaces indicadas pela topologia.</li>
+    </ol>
+    <h2>Tarefa 2: Configure o computador</h2>
+    <ol>
+        <li>Configure corretamente: o endereço IP do computador, sua máscara e seu default-gateway.</li>
+        <li>Configure a placa de rede para que funcione estaticamente em 100 Mbps e full-duplex.</li>
+        <li>Você pode se certificar de que essas configurações estão corretas aplicando o comando <code>ipconfig</code> no prompt de comando do Windows da máquina virtual.</li>
+    </ol>
+    <h2>Tarefa 3: Configure o Switch</h2>
+    <ol>
+        <li>O hostname do switch deve ser <code>SW-01</code>. E a senha de acesso ao modo enable deve ser <code>admin</code>.</li>
+        <li>Todas as senhas do equipamento devem estar criptografadas com o comando <code>service password-encryption</code>.</li>
+        <li>Habilite os comandos <code>no ip domain-lookup</code> e <code>logging synchronous</code>.</li>
+        <li>Deve ser possível acessá-lo remotamente exclusivamente via SSHv2 por um par de usuário/senha <code>aluno/instituto</code> e outro à sua escolha. As conexões remotas via console/vty se encerrem com 10min00s de inatividade. O acesso a linha de console deve ser permitido a esses mesmos usuários.</li>
+        <li>A interface do switch conectada ao router deve estar configurada estaticamente como 1000 Mbps, full-duplex, e possuir uma descrição à sua escolha.</li>
+        <li>A interface do switch conectada ao PC0 deve estar configurada estaticamente como 100 Mbps, full-duplex, e possuir uma descrição à sua escolha.</li>
+        <li>Deve existir uma configuração de port-security de forma a não permitir nenhuma outra máquina além do PC-0 conectar-se a FastEthernet 0/1. Todas as demais portas FastEthernet devem estar desabilitadas, assim como a porta GigabitEthernet que não está conectada ao router.</li>
+        <li>Confira as configurações aplicadas com o comando <code>show running-config</code>.</li>
+        <li>Salve as configurações do equipamento na <code>startup-config</code>.</li>
+    </ol>
+    <h2>Tarefa 4: Configure o Router</h2>
+    <ol>
+        <li>O hostname do switch deve ser <code>RT-01</code>. E a senha (criptografada) de acesso ao modo enable deve ser <code>admin</code>.</li>
+        <li>Todas as senhas do equipamento devem estar criptografadas com o comando <code>service password-encryption</code>.</li>
+        <li>Habilite os comandos <code>no ip domain-lookup</code> e <code>logging synchronous</code>.</li>
+        <li>Deve ser possível acessá-lo remotamente exclusivamente via SSHv2 por um par de usuário/senha <code>aluno/instituto</code> e outro à sua escolha. As conexões remotas via console/vty se encerrem com 10min00s de inatividade. O acesso a linha de console deve ser permitido a esses mesmos usuários.</li>
+        <li>A interface do router conectada ao switch deve estar configurada estaticamente como 1000 Mbps, full-duplex, e possuir uma descrição à sua escolha. Configure nessa interface o endereço IP indicado para o RT-01.</li>
+        <li>Confira as configurações aplicadas com o comando <code>show running-config</code>.</li>
+        <li>Salve as configurações do equipamento na <code>startup-config</code>.</li>
+    </ol>
+    <h2>Tarefa 5: Teste a conexão remota</h2>
+    <ol>
+        <li>Teste a conexão em nível de redes (L3) através de um comando <code>ping</code> entre o PC0 e o SW-01.</li>
+        <li>Teste a conexão remota via SSH a partir do PC0 para o SW-01, usando o comando '<code>ssh -l username@endereco_ip_equipamento</code>' no prompt de comando.</li>
+        <li>Teste a conexão em nível de redes (L3) através de um comando <code>ping</code> entre o PC0 e o RT-01.</li>
+        <li>Teste a conexão remota via SSH a partir do PC0 para o RT-01, usando o comando '<code>ssh -l username@endereco_ip_equipamento</code>' no prompt de comando.</li>
+    </ol>
+        <br>
+</section>
+
+</main>
+
+<footer>
+    <p>All content copyright &copy; 2022, Rafael Moraes.</p>
+</footer>
+
+</body>
+</html>

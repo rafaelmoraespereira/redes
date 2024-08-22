@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Laboratório de Redes envolvendo Switches">
+    <meta name="keywords" content="lab ccna redes network switch">
+    <meta http-equiv="author" content="Rafael de Moraes">
+    <link rel="stylesheet" href="../styles/style-labs.css">
+    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+    <title>LAB B02-C03</title>
+</head>
+
+<body>
+<header>
+    <nav>
+        <ul>
+            <li><a href="../index.html">Menu</a></li>
+            <li><a href="lab_b02-c02.html">Anterior</a></li>
+            <li><a href="lab_b02-c04.html">Próximo</a></li>
+            <li><a href="http://www.github.com/rafaelmoraespereira" rel="external" target="_blank">Sobre</a></li>
+        </ul>
+    </nav>
+    <h1>
+        <h2>LABORATÓRIO DE REDES B02-C03</h2>
+        <p>Vamos colocar a mão na massa! Chegou a hora da prática de laboratório de redes.</p>
+    </h1>
+</header>
+
+<main>
+<section>
+    <h1>Introdução</h1>
+    <p>Esse laboratório faz parte das aulas do Capítulo 03 - Configuração Básica de Gerenciamento de Switch. As aulas teóricas que fundamentam essa prática podem ser encontradas nos links abaixo:</p>
+    <ul>
+        <li><a href="https://www.youtube.com/watch?v=tHmXg7RthBc" target="_blank" rel="external">Bimestre 2. C03 - Parte 1/4 - Configuração Básica de Gerenciamento do Switch</a></li>
+        <li><a href="https://www.youtube.com/watch?v=8aqB-zKoJGo&t=" target="_blank" rel="external">Bimestre 2. C03 - Parte 2/4 - Configuração Básica de Gerenciamento do Switch</a></li>
+        <li><a href="https://www.youtube.com/watch?v=miGza2v40-8" target="_blank" rel="external">Bimestre 2. C03 - Parte 3/4 - Configuração Básica de Gerenciamento do Switch</a></li>
+        <li><a href="https://www.youtube.com/watch?v=LJqR5scWHHs" target="_blank" rel="external">Bimestre 2. C03 - Parte 4/4 - Configuração Básica de Gerenciamento do Switch</a></li>
+        <li><a href="https://youtu.be/3qn-vIav-zo" target="_blank" rel="external">Solução do LAB B02-C03</a></li>
+    </ul>
+</section>
+
+<section>
+    <h1>Objetivo</h1>
+    <p>Desta vez iremos focar em dois elementos: o acesso remoto mais robusto do ponto de vista da segurança, e uma miscelânea de comandos auxiliares que são bastante úteis no dia a dia de um engenheiro de redes.</p>
+</section>
+
+<section id="topologia_lab">
+    <h1>Topologia do Lab</h1>
+    <figure>
+        <img src="../images/labs/b02-lab03-topologia.png" alt="Topologia do Lab 03" title="Topologia C03 Configuração Básica de Gerenciamento do Switch - Lab 03" width=80%  />
+        <figcaption>Topologia do Lab 03</figcaption>
+    </figure>
+</section>
+
+<section id="sumario">
+    <h1>Sumário de Comandos</h1>
+    <table class="tabela-comandos">
+        <thead>
+            <th scope="col">Comando</th>
+            <th scope="col">Modo/Motivo/Descrição</th>
+        </thead>
+        <tr>
+            <td><strong><code>line console 0</code></strong></td>
+            <td>Comando global que muda o contexto para o modo de configuração de console.</td>
+        </tr>
+        <tr>
+            <td><strong><code>line vty 0 15</code></strong></td>
+            <td>Comando global que muda o contexto para o modo de configuração vty para o escolo de linhas vty no comando.</td>
+        </tr>
+        <tr>
+            <td><strong><code>login</code></strong></td>
+            <td>Modo de configuração de linha (console e vty). Diz ao IOS para pedir uma senha.</td>
+        </tr>
+        <tr>
+            <td><strong><code>password</code> </strong><i>valor-password</i></td>
+            <td>Modo de configuração de linha (console e vty). Lista a senha necessária se o comando <strong><code>login</code></strong> estiver configurado.</td>
+        </tr>
+        <tr>
+            <td><strong><code>interface</code></strong> <i>digitar-o-número-da-porta</i></td>
+            <td>Comando global que altera o contexto para o modo interaface - por exemplo, <strong><code>interface FastEthernet 0/1</code></strong>.</td>
+        </tr>
+        <tr>
+            <td><strong><code>hostname</code></strong> <i>nome</i></td>
+            <td>Comando global que ajusta o nome de servidor do switch, que também é usado como a primeira parte do prompt de comando do switch.</td>
+        </tr>
+        <tr>
+            <td><strong><code>exit</code></strong></td>
+            <td>Retorna ao modo anterior no modo de configuração.</td>
+        </tr>
+        <tr>
+            <td><strong><code>end</code></strong></td>
+            <td>Encerra o modo de configuração e retorna ao modo ativo de qualquer um dos submodos de configuração.</td>
+        </tr>
+        <tr>
+            <td><code>Ctrl+Z</code></td>
+            <td>Não é um comando, mas uma combinação de duas teclas que, se pressionadas juntas, têm a mesma função do comando <strong><code>end</code></strong>.</td>
+        </tr>
+        <tr>
+            <td><strong><code>login local</code></strong></td>
+            <td>Modo de configuração de console e vty. Avisa ao IOS para mostrar a tela de usuário e senha, a serem verificados com os comandos de configuração global <strong><code>username</code></strong> localmente configurados no switch ou roteador.</td>
+        </tr>
+        <tr>
+            <td><strong><code>username</code></strong> <em>nome-usuário</em> <strong><code>password</code></strong> <em>senha-do-usuário</em></td>
+            <td>Comando global. Define um de múltiplos nomes de usuário possíveis e senhas associadas, usados para autenticação do usuário. Usado quando o comando de configuração de linha <strong><code>login local</code></strong> for usado.</td>
+        </tr>
+        <tr>
+            <td><strong><code>crypto key generate rsa [modulus</code></strong> 360..2048<strong><code>]</code></strong></td>
+            <td>Comando global. Cria e armazena (em uma localização escondida na memória flash) as chaves neessárias pelo SSH.</td>
+        </tr>
+        <tr>
+            <td><strong><code>transport input {telnet | ssh | all | none}</code></strong></td>
+            <td>Modo de configuração de linha vty. Define se o acesso Telnet e/ou SSH é permitido no switch. Ambos os valores podem ser configurados em um comando para permitir tanto o acesso Telnet quanto o SSH (padrão).</td>
+        </tr>
+    </table>
+</section>
+
+<section id="sumario">
+    <table class="tabela-comandos">
+        <thead>
+            <th scope="col">Comando</th>
+            <th scope="col">Modo/Motivo/Descrição</th>
+        </thead>
+        <tr>
+            <td><strong><code>enable secret</code></strong> <em>senha-de-password</em></td>
+            <td>Comando global. Ajusta a senha do swich que é necessária par que qualquer usuário acesse o modo enable.</td>
+        </tr>
+        <tr>
+            <td><strong><code>history size</code></strong> <em>comprimento</em></td>
+            <td>Modo de configuração de linha. Define o número de comandos mantidos no buffer de históricos, para depois serem usados, para usuários de tais linhas.</td>
+        </tr>
+        <tr>
+            <td><strong><code>logging synchronous</code></strong></td>
+            <td>Modo de console ou vty. Avisa ao IOS para enviar mensagens de log para o usuário em intervalos naturais de comandos, em vez de interromper uma linha de resultado.</td>
+        </tr>
+        <tr>
+            <td><strong><code>[no] logging console</code></strong></td>
+            <td>Comando global que desativa ou ativa a exibição de mensagens no console.</td>
+        </tr>
+        <tr>
+            <td><strong><code>exec-timeout minutes</code></strong> <em>[segundos]</em></td>
+            <td>Modo de console ou vty. Ajusta o cronômetro de inatividade para que, depois de definido o período de inatividade, o IOS feche a sessão do usuário atual.</td>
+        </tr>
+    </table>
+
+    <table class="tabela-comandos">
+        <thead>
+            <th scope="col">Comando</th>
+            <th scope="col">Modo/Motivo/Descrição</th>
+        </thead>
+        <tr>
+            <td><strong><code>show running-config</code></strong></td>
+            <td>Lista a configuração em uso.</td>
+        </tr>
+        <tr>
+            <td><strong><code>show interfaces status</code></strong></td>
+            <td>Lista um resultado por interface, notando a descrição, estado operacional e ajustes para o duplex e velocidade em cada interface.</td>
+        </tr>
+        <tr>
+            <td><strong><code>show interfaces vlan</code></strong> <em>número-da-vlan</em></td>
+            <td>Lista o status da interface, o endereço IP, a máscara e outras coisas.</td>
+        </tr>
+        <tr>
+            <td><strong><code>show ip default-gateway</code></strong></td>
+            <td>Lista ajustes de switch para o default-gateway.</td>
+        <tr>
+            <td><strong><code>show crypto key mypubkey rsa</code></strong></td>
+            <td>Lista as chaves pública e privada criadas para o uso como SSH usando o comando de configuração global <strong><code>crypto key generate rsa</code></strong></td>
+        </tr>
+        <tr>
+            <td><strong><code>show ip ssh</code></strong></td>
+            <td>Lista informação de status para o servidor SSH, incluindo a versão SSH.</td>
+        </tr>
+        <tr>
+            <td><strong><code>show ssh</code></strong></td>
+            <td>Lista as informações de status para as conexões atuais SSH dentro e fora do switch local.</td>
+        </tr>
+        <tr>
+            <td><strong><code>show history</code></strong></td>
+            <td>Lista os comandos do histórico do buffer.</td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h1>Endereços IP</h1>
+    <table class="tabela-complementar">
+        <thead>
+            <th scope="col">Dispositivo</th>
+            <th scope="col">Endereço IP</th>
+            <th scope="col">Máscara de Subrede</th>
+            <th scope="col">Default Gateway</th>
+        </thead>
+        <tr>
+            <td>PC A</td>
+            <td>192.168.1.5</td>
+            <td>255.255.255.0</td>
+            <td>192.168.1.1</td>
+        </tr>
+        <tr>
+            <td>PC B</td>
+            <td>192.168.1.6</td>
+            <td>255.255.255.0</td>
+            <td>192.168.1.1</td>
+        </tr>
+        <tr>
+            <td>PC C</td>
+            <td>192.168.1.7</td>
+            <td>255.255.255.0</td>
+            <td>192.168.1.1</td>
+        </tr>
+    </table>
+</section>
+
+<section id="tarefas_lab">
+    <h1>Tarefas do Lab</h1>
+    <h2>Tarefa 1: Monte a Topologia</h2>
+        <ol>
+            <li>Insira os 03 Switches (modelo 2960) e os 06 computadores (qualquer dos modelos disponíveis) no simulador.</li>
+            <li>Conecte os cabos adequados nas interfaces indicadas pela topologia.</li>
+            <li>Todos os links ficaram verdes? Se não, por que?</li>
+        </ol>
+    <h2>Tarefa 2: Configure os Computadores</h2>
+    <ol>
+        <li>Configure corretamente: o endereço IP do computador, sua máscara e seu default-gateway.</li>
+        <li>Você pode se certificar de que essas configurações estão corretas aplicando o comando <code>ipconfig</code> no prompt de comando do Windows da máquina virtual.</li>
+    </ol>
+    <h2>Tarefa 3: Configure os Switches</h2>
+    <ol>
+        <li>Inicie pela configuração do Switch SW-01. O mais recomendado é que você só faça as demais configurações dos outros switches uma vez que tenha terminado o primeiro. Sempre que necessário utilize a ajuda no terminal de comandos CLI do equipamento, ou complete comandos com a tecla 'Tab'.</li>
+        <br />
+            <ol>
+                <li>A partir do modo de Configuração Global, configure o hostname do equipamento como '<code>SW-01</code>'.</li>
+                <li>Coloque uma senha '<code>admin</code>' para entrar no modo enable do equipamento.</li>
+                <li>Através do uso do comando <code>no ip domain-lookup</code> para desabilitar procuras por nomes de domínio</li>
+                <li>Habilite o comando <code>logging synchronous</code> no SW-01.</li>
+                <li>Configures dois pares de usuário/senha no equipamento, um deles deve ser rafael/professor, e o outro a sua escolha.</li>
+                <li>Faça com que as linhas de acesso virtual (vty) aceitem apenas conexões do protocolo SSH.</li>
+                <li>Configure os equipamentos para que as conexões remotas via console/vty se encerrem com 2min00s de inatividade.</li>
+                <li>Gere as chaves RSA para serem usadas no SSH. Elas devem ser geradas com 1024-bits.</li>
+                <li>Configure os respectivos endereço IP, máscara e default-gateway do SW-01, para que possa ser possível acessá-lo por sua interface VLAN virtual. Não se esqueça de fazer com que essa interface esteja no estado <code>up/up</code>.</li>
+            </ol>
+        <li>Repita os procedimentos acima, alterando as devidas particularidades (hostname e endereço IP), para o Switch SW-02.</li>
+        <li>Repita os procedimentos acima, alterando as devidas particularidades (hostname e endereço IP), para o Switch SW-03.</li>
+    </ol>
+    <h2>Tarefa 4: Teste as Conexões Remotas</h2>
+    <ol>
+        <li>Teste a conexão remota SSH entre o PC A e o SW-03</li>
+        <li>Teste a conexão remota SSH entre o PC B e o SW-02</li>
+        <li>Teste a conexão remota SSH entre o PC C e o SW-01</li>
+        <li>Quais as principais diferenças entre os protocolos de acesso remoto Telnet e SSH?</li>
+        <li>Qual seria o comando usado no Prompt de Comando do Windows na hora de estabelecer uma conexão remota no equipamento por Telnet?
+            <br />Qual seria o comando usado no Prompt de Comando do Windows na hora de estabelecer uma conexão remota no equipamento por SSH?</li>
+    </ol>
+</section>
+
+</main>
+
+<footer>
+    <p>All content copyright &copy; 2022, Rafael Moraes.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Laboratório de Redes envolvendo Switches">
+    <meta name="keywords" content="lab ccna redes network switch">
+    <meta http-equiv="author" content="Rafael de Moraes">
+    <link rel="stylesheet" href="../styles/style-labs.css">
+    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+    <title>LAB B02-C02</title>
+</head>
+
+<body>
+
+<header>
+    <nav>
+        <ul>
+            <li><a href="../index.html">Menu</a></li>
+            <li><a href="lab_b02-c01.html">Anterior</a></li>
+            <li><a href="lab_b02-c03.html">Próximo</a></li>
+            <li><a href="http://www.github.com/rafaelmoraespereira" rel="external" target="_blank">Sobre</a></li>
+        </ul>
+    </nav>
+    <h1>
+        <h2>LABORATÓRIO DE REDES B02-C02</h2>
+        <p>Vamos colocar a mão na massa! Chegou a hora da prática de laboratório de redes.</p>
+    </h1>
+</header>
+
+<!-- INÍCIO -->
+<main>
+
+<section>
+    <h1>Introdução</h1>
+    <p>Esse laboratório faz parte das aulas do Capítulo 02 - Conceitos Básicos de Switches nas LANs Ethernet. As aulas teóricas que fundamentam essa prática podem ser encontradas nos links abaixo:</p>
+    <ul>
+        <li><a href="https://www.youtube.com/watch?v=83_wfKaiGlA" target="_blank" rel="external">C02 - Parte 1/3 - Conceitos Básicos de Switches nas LANs Ethernet</a></li>
+        <li><a href="https://www.youtube.com/watch?v=cXBUqwaqrDc" target="_blank" rel="external">C02 - Parte 2/3 - Conceitos Básicos de Switches nas LANs Ethernet</a></li>
+        <li>
+            <a href="https://www.youtube.com/watch?v=tQZ6-HyBdSA" target="_blank" rel="external">C02 - Parte 3/3 - Conceitos Básicos de Switches nas LANs Ethernet</a>
+        </li>
+        <li><a href="https://youtu.be/zTUZtZjfeCc" target="_blank" rel="external">Solução do LAB B02-C02</a></li>
+    </ul>
+</section>
+
+<section>
+    <h1>Objetivo</h1>
+        <p>Desta vez iremos partir do princípio que você já consegue facilmente fazer uma inspeção visual na topologia do Cisco Packet Tracer, que foi o que trabalhamos no lab passado. O foco agora é checar o correto funcionamento das interfaces a partir de comandos no próprio switch. <br />Lembre-se que no mundo real você, em geral, não irá visualizar a topologia como um todo, mas sim terá que checar nos equipamentos individualmente a fim de detectar possíveis problemas de operação.</p>
+</section>
+
+<section id="topologia_lab">
+    <h1>Topologia do Lab</h1>
+    <figure>
+        <img src="../images/labs/b02-lab02-topologia.png" alt="Topologia do Lab 02" title="Topologia C02 Conceitos Básicos de Switches nas LANs Ethernet - Lab 02" width=80%  />
+        <figcaption>Topologia do Lab 02</figcaption>
+    </figure>
+</section>
+    
+<section id="sumario">
+    <h1>Sumário de Comandos</h1>
+    <table class="tabela-comandos">
+        <thead>
+            <th scope="col">Comando</th>
+            <th scope="col">Modo/Motivo/Descrição</th>
+        </thead>
+        <tr>
+            <td><strong><code>line console 0</code></strong></td>
+            <td>Comando global que muda o contexto para o modo de configuração de console.</td>
+        </tr>
+        <tr>
+            <td><strong><code>line vty 0 15</code></strong></td>
+            <td>Comando global que muda o contexto para o modo de configuração vty para o escolo de linhas vty no comando.</td>
+        </tr>
+        <tr>
+            <td><strong><code>login</code></strong></td>
+            <td>Modo de configuração de linha (console e vty). Diz ao IOS para pedir uma senha.</td>
+        </tr>
+        <tr>
+            <td><strong><code>password</code> </strong><i>valor-password</i></td>
+            <td>Modo de configuração de linha (console e vty). Lista a senha necessária se o comando <strong><code>login</code></strong> estiver configurado.</td>
+        </tr>
+        <tr>
+            <td><strong><code>interface</code></strong> <i>digitar-o-número-da-porta</i></td>
+            <td>Comando global que altera o contexto para o modo interaface - por exemplo, <strong><code>interface FastEthernet 0/1</code></strong>.</td>
+        </tr>
+        <tr>
+            <td><strong><code>hostname</code></strong> <i>nome</i></td>
+            <td>Comando global que ajusta o nome de servidor do switch, que também é usado como a primeira parte do prompt de comando do switch.</td>
+        </tr>
+        <tr>
+            <td><strong><code>exit</code></strong></td>
+            <td>Retorna ao modo anterior no modo de configuração.</td>
+        </tr>
+        <tr>
+            <td><strong><code>end</code></strong></td>
+            <td>Encerra o modo de configuração e retorna ao modo ativo de qualquer um dos submodos de configuração.</td>
+        </tr>
+        <tr>
+            <td><code>Ctrl+Z</code></td>
+            <td>Não é um comando, mas uma combinação de duas teclas que, se pressionadas juntas, têm a mesma função do comando <strong><code>end</code></strong>.</td>
+        </tr>
+        <tr>
+            <td><strong><code>login local</code></strong></td>
+            <td>Modo de configuração de console e vty. Avisa ao IOS para mostrar a tela de usuário e senha, a serem verificados com os comandos de configuração global <strong><code>username</code></strong> localmente configurados no switch ou roteador.</td>
+        </tr>
+        <tr>
+            <td><strong><code>username</code></strong> <em>nome-usuário</em> <strong><code>password</code></strong> <em>senha-do-usuário</em></td>
+            <td>Comando global. Define um de múltiplos nomes de usuário possíveis e senhas associadas, usados para autenticação do usuário. Usado quando o comando de configuração de linha <strong><code>login local</code></strong> for usado.</td>
+        </tr>
+    </table>
+    <br />
+    <table class="tabela-comandos">
+        <thead>
+            <th scope="col">Comando</th>
+            <th scope="col">Modo/Motivo/Descrição</th>
+        </thead>
+        <tr>
+            <td><strong><code>interface vlan</code></strong> <em>número</em></td>
+            <td>Altera o contexto para o modo de interface VLAN. Para a VLAN 1, permite a configuração do endereço IP.</td>
+        </tr>
+        <tr>
+            <td><strong><code>ip address</code></strong> <em>endereço-ip máscara-de-subrede</em></td>
+            <td>Modo de interface VLAN. Configura estaticamente o endereço IP e a máscara do switch.</td>
+        </tr>
+        <tr>
+            <td><strong><code>ip address dhcp</code></strong></td>
+            <td>Modo de interface VLAN. Configura o switch como um cliente DHCP para descobrir seus endereços IP, máscara e default-gateway.</td>
+        </tr>
+        <tr>
+            <td><strong><code>ip default-gateway</code></strong> <em>endereço</em></td>
+            <td>Comando global. Configura o endereço IP do default-gateway do switch. Desnecessário se o switch usar DHCP.</td>
+        </tr>
+    </table>
+    <br />
+    <table class="tabela-comandos">
+        <thead>
+            <th scope="col">Comando</th>
+            <th scope="col">Modo/Motivo/Descrição</th>
+        </thead>
+        <tr>
+            <td><strong><code>interface</code></strong> <em>tipo número-de-porta</em></td>
+            <td>Muda o contexto para o modo de interface. O tipo é geralmente FastEthernet ou GigabitEthernet. O número de portas possíveis pode variar de acordo com o modelo do switch - Fa0/1, Fa0/2, etc.</td>
+        </tr>
+        <tr>
+            <td><strong><code>interface range</code></strong> <em>digitar-extensão de portas</em></td>
+            <td>Muda o contexto para o modo de interface para uma determinada extensão de interfaces consecutivamente numeradas. Os subcomandos digitados serão aplicados a todas as interfaces na extensão.</td>
+        </tr>
+        <tr>
+            <td><strong><code>shutdown</code></strong><br /><strong><code>no shutdown</code></strong></td>
+            <td>Modo de interface. Desativa ou ativa a interface, respectivamente.</td>
+        </tr>
+        <tr>
+            <td><strong><code>speed {10 | 100 | 1000 | auto}</code></strong></td>
+            <td>Modo de interface. Ajusta a velocidade manualmente para o número usado ou, ao usar o ajuste <strong><code>auto</code></strong>, negocia automaticamente a velocidade.</td>
+        </tr>
+        <tr>
+            <td><strong><code>duplex {full | half | auto}</code></strong></td>
+            <td>Modo de interface. Ajusta manualmente o duplex para half ou full, ou para negociar o ajuste do duplex.</td>
+        </tr>
+        <tr>
+            <td><strong><code>description</code></strong> <em>texto-descritivo</em></td>
+            <td>Modo de interface. Lista qualquer texto de informação que o engenheiro precise procurar na interface, como o dispositivo esperado do outro lado do cabo.</td>
+        </tr>
+    </table>
+    <br />
+    <table class="tabela-comandos">
+        <thead>
+            <th scope="col">Comando</th>
+            <th scope="col">Modo/Motivo/Descrição</th>
+        </thead>
+        <tr>
+            <td><strong><code>show running-config</code></strong></td>
+            <td>Lista a configuração em uso.</td>
+        </tr>
+        <tr>
+            <td><strong><code>show mac address-table</code></strong></td>
+            <td>Lista as entradas da tabela MAC do switch.</td>
+        </tr>
+        <tr>
+            <td><strong><code>show interfaces status</code></strong></td>
+            <td>Lista um resultado por interface, notando a descrição, estado operacional e ajustes para o duplex e velocidade em cada interface.</td>
+        </tr>
+        <tr>
+            <td><strong><code>show interfaces vlan</code></strong> <em>número-da-vlan</em></td>
+            <td>Lista o status da interface, o endereço IP, a máscara e outras coisas.</td>
+        </tr>
+        <tr>
+            <td><strong><code>show ip default-gateway</code></strong></td>
+            <td>Lista ajustes de switch para o default-gateway.</td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h1>Endereços IP</h1>
+    <table class="tabela-complementar">
+        <thead>
+            <th scope="col"> Dispositivo </th>
+            <th scope="col"> Endereço IP </th>
+            <th scope="col"> Máscara de Subrede </th>
+            <th scope="col"> Default Gateway </th>
+        </thead>
+        <tr>
+            <td> PC A </td>
+            <td> 192.168.0.5 </td>
+            <td> 255.255.255.0 </td>
+            <td> 192.168.0.1 </td>
+        </tr>
+        <tr>
+            <td> PC B </td>
+            <td> 192.168.0.10 </td>
+            <td> 255.255.255.0 </td>
+            <td> 192.168.0.1 </td>
+        </tr>
+        <tr>
+            <td> PC C </td>
+            <td> 192.168.0.15 </td>
+            <td> 255.255.255.0 </td>
+            <td> 192.168.0.1 </td>
+        </tr>
+        <tr>
+            <td> PC D </td>
+            <td> 192.168.0.20 </td>
+            <td> 255.255.255.0 </td>
+            <td> 192.168.0.1 </td>
+        </tr>
+        <tr>
+            <td> PC E </td>
+            <td> 192.168.0.25 </td>
+            <td> 255.255.255.0 </td>
+            <td> 192.168.0.1 </td>
+        </tr>
+        <tr>
+            <td> PC F </td>
+            <td> 192.168.0.30 </td>
+            <td> 255.255.255.0 </td>
+            <td> 192.168.0.1 </td>
+        </tr>
+    </table>
+</section>
+
+<section id="tarefas_lab">
+    <h1>Tarefas do Lab</h1>
+    <h2>Tarefa 1: Monte a Topologia</h2>
+        <ol>
+            <li>Insira os 03 Switches (modelo 2960) e os 06 computadores (qualquer dos modelos disponíveis) no simulador.</li>
+            <li>Conecte os cabos adequados nas interfaces indicadas pela topologia.</li>
+            <li>Todos os links ficaram verdes? Se não, por que?</li>
+        </ol>
+    <h2>Tarefa 2: Configure os Switches</h2>
+        <ol>
+            <li>Inicie pela configuração do Switch SW-01. O mais recomendado é que você só faça as demais configurações dos outros switches uma vez que tenha terminado o primeiro. Sempre que necessário utilize a ajuda no terminal de comandos CLI do equipamento, ou complete comandos com a tecla 'Tab'.</li>
+                <ol>
+                    <li>A partir do modo de Configuração Global, configure o hostname do equipamento como '<code>SW-01</code>'.</li>
+                    <li>Coloque uma senha '<code>admin</code>' para entrar no modo enable do equipamento.</li>
+                    <li>Coloque uma senha de acesso local (console) '<code>iflocal</code>' no equipamento.</li>
+                    <li>Coloque uma senha para acesso remoto (linhas vty) pelo protocolo Telnet '<code>ifremoto</code>' no equipamento.</li>
+                    <li>Através do comando '<code>show running-confi</code>g', confira se as configurações aplicadas estão corretas.</li>
+                    <li>Com o comando '<code>show interfaces status</code>' verifique de uma forma geral os estados das portas conectadas.</li>
+                    <li>Com os respectivos comandos '<code>show interface X/Y</code>', verifique os parâmetros completos das portas que estão no estado 'Connected'.</li>
+                    <li>Salve as configurações do equipamento (<code>startup-config</code>) ao final.</li>
+                </ol>
+            <li>Repita os procedimentos acima, alterando o respectivo hostname, para o Switch SW-02.</li>
+            <li>Repita os procedimentos acima, alterando o respectivo hostname, para o Switch SW-03.</li>
+            </ol>
+            <br>
+    <h2>Tarefa 3: Tabela de Endereços MAC</h2>
+        <p>Nesta tarefa você pode agir de duas formas: a primeira, e mais trabalhosa, você entra em cada um dos PCs e verifica seu endereço MAC, utilizando por exemplo o comando '<code>ipconfig /all</code>' no 'Prompt de Comando'. Ou você pode pingar os PCs entre si, fazendo-os se comunicar para coletar em cada switch sua tabela MAC, com o comando '<code>show mac address-table</code>'. Lembre-se que nesse segundo caso, se você demorar mais de 300s, as entradas podem começar a ser apagadas pelo switch (aging-time).</p>
+        <br />
+        <ol>
+            <li> Supondo que todos os computadores estejam se comunicando corretamente, preencha a Tabela de Endereços MAC do Switch SW-01.</li>
+                <br />
+                <table class="tabela-mac">
+                    <tr>
+                        <th scope="col"><code>VLAN</code></th>
+                        <th scope="col"><code>Mac Address</code></th>
+                        <th scope="col"><code>Type</code></th>
+                        <th scope="col"><code>Ports</code></th>
+                    </tr>
+                    <tr>
+                        <td><code>1</code></td>
+                        <td></td>
+                        <td><code>DYNAMIC</code></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><code>1</code></td>
+                        <td></td>
+                        <td><code>DYNAMIC</code></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><code>1</code></td>
+                        <td></td>
+                        <td><code>DYNAMIC</code></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><code>1</code></td>
+                        <td></td>
+                        <td><code>DYNAMIC</code></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><code>1</code></td>
+                        <td></td>
+                        <td><code>DYNAMIC</code></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><code>1</code></td>
+                        <td></td>
+                        <td><code>DYNAMIC</code></td>
+                        <td></td>
+                    </tr>
+                </table>
+                <br />
+            <li> Supondo que todos os computadores estejam se comunicando corretamente, preencha a Tabela de Endereços MAC do Switch SW-02.</li>
+            <br />
+            <table class="tabela-mac">
+                <tr>
+                    <th scope="col"><code>VLAN</code></th>
+                    <th scope="col"><code>Mac Address</code></th>
+                    <th scope="col"><code>Type</code></th>
+                    <th scope="col"><code>Ports</code></th>
+                </tr>
+                <tr>
+                    <td><code>1</code></td>
+                    <td></td>
+                    <td><code>DYNAMIC</code></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><code>1</code></td>
+                    <td></td>
+                    <td><code>DYNAMIC</code></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><code>1</code></td>
+                    <td></td>
+                    <td><code>DYNAMIC</code></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><code>1</code></td>
+                    <td></td>
+                    <td><code>DYNAMIC</code></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><code>1</code></td>
+                    <td></td>
+                    <td><code>DYNAMIC</code></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><code>1</code></td>
+                    <td></td>
+                    <td><code>DYNAMIC</code></td>
+                    <td></td>
+                </tr>
+            </table>
+            <br />
+    
+            <li> Supondo que todos os computadores estejam se comunicando corretamente, preencha a Tabela de Endereços MAC do Switch SW-03.</li>
+                            <br />
+                <table class="tabela-mac">
+                    <tr>
+                        <th scope="col"><code>VLAN</code></th>
+                        <th scope="col"><code>Mac Address</code></th>
+                        <th scope="col"><code>Type</code></th>
+                        <th scope="col"><code>Ports</code></th>
+                    </tr>
+                    <tr>
+                        <td><code>1</code></td>
+                        <td></td>
+                        <td><code>DYNAMIC</code></td>
+                        <td class="tres"></td>
+                    </tr>
+                    <tr>
+                        <td><code>1</code></td>
+                        <td></td>
+                        <td><code>DYNAMIC</code></td>
+                        <td class="tres"></td>
+                    </tr>
+                    <tr>
+                        <td><code>1</code></td>
+                        <td></td>
+                        <td><code>DYNAMIC</code></td>
+                        <td class="tres"></td>
+                    </tr>
+                    <tr>
+                        <td><code>1</code></td>
+                        <td></td>
+                        <td><code>DYNAMIC</code></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><code>1</code></td>
+                        <td></td>
+                        <td><code>DYNAMIC</code></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><code>1</code></td>
+                        <td></td>
+                        <td><code>DYNAMIC</code></td>
+                        <td></td>
+                    </tr>
+                </table>
+                <br />
+        </ol>
+</section>
+</main>
+
+<footer>
+    <p>All content copyright &copy; 2022, Rafael Moraes.</p>
+</footer>
+
+</body>
+</html>

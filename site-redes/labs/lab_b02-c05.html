@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Laboratório de Redes envolvendo Switches">
+    <meta name="keywords" content="lab ccna redes network switch">
+    <meta http-equiv="author" content="Rafael de Moraes">
+    <link rel="stylesheet" href="../styles/style-labs.css">
+    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+    <title>LAB B02-C05</title>
+</head>
+
+<body>
+
+<header>
+    <nav>
+        <ul>
+            <li><a href="../index.html">Menu</a></li>
+            <li><a href="lab_b02-c04.html">Anterior</a></li>
+            <li><a href="http://www.github.com/rafaelmoraespereira" rel="external" target="_blank">Sobre</a></li>
+        </ul>
+    </nav>
+    <h1>
+        <h2>LABORATÓRIO DE REDES B02-C05</h2>
+        <p>Vamos colocar a mão na massa! Chegou a hora da prática de laboratório de redes.</p>
+    </h1>
+</header>
+
+<main>
+
+<section>
+    <h1>Introdução</h1>
+    <p>Esse laboratório faz parte das aulas do Capítulo 05. As aulas teóricas que fundamentam essa prática podem ser encontradas nos links abaixo:</p>
+    <ul>
+        <li><a href="https://youtu.be/6P82PIgq3i4" target="_blank" rel="external">C05 - Parte 1/3 - Básico de Implantação das Etherenet LANs</a></li>
+        <li><a href="https://youtu.be/resfO7-vzDI" target="_blank" rel="external">C05 - Parte 2/3 - Básico de Implantação das Etherenet LANs</a></li>
+        <li><a href="https://youtu.be/Huz37dQNNFs" target="_blank" rel="external">C05 - Parte 3/3 - Básico de Implantação das Etherenet LANs</a></li>
+        <li><a href="https://youtu.be/_aZvK859eD4" target="_blank" rel="external">Solução do LAB B02-C05</a></li>
+    </ul>
+</section>
+
+<section>
+    <h1>Objetivo</h1>
+    <p>Monte corretamente a topologia atentando ao uso adequado dos equipamentos, cabos e portas conforme especificados. Realize todas as configurações que julgue necessárias para o funciomento adequado da lógica proposta na parte de Tarefas. Ao final teste afim de garantir o correto funcionamento.</p>
+</section>
+
+<section id="topologia_lab">
+    <h1>Topologia do Lab</h1>
+    <figure>
+        <img src="../images/labs/b02-lab05-topologia.png" alt="Topologia do Lab 05" title="Topologia C05 Virtual LANs - Lab 05" width=80% />
+        <figcaption>Topologia do Lab 05</figcaption>
+    </figure>
+</section>
+
+<section id="sumario">
+    <h1>Sumário de Comandos</h1>
+    <table class="tabela-comandos">
+        <thead>
+            <th scope="col">Comando</th>
+            <th scope="col">Modo/Motivo/Descrição</th>
+        </thead>
+        <tr>
+            <td><strong><code>line console 0</code></strong></td>
+            <td>Comando global que muda o contexto para o modo de configuração de console.</td>
+        </tr>
+        <tr>
+            <td><strong><code>line vty 0 15</code></strong></td>
+            <td>Comando global que muda o contexto para o modo de configuração vty para o escolo de linhas vty no comando.</td>
+        </tr>
+        <tr>
+            <td><strong><code>login</code></strong></td>
+            <td>Modo de configuração de linha (console e vty). Diz ao IOS para pedir uma senha.</td>
+        </tr>
+        <tr>
+            <td><strong><code>password</code> </strong><i>valor-password</i></td>
+            <td>Modo de configuração de linha (console e vty). Lista a senha necessária se o comando <strong><code>login</code></strong> estiver configurado.</td>
+        </tr>
+        <tr>
+            <td><strong><code>interface</code></strong> <i>digitar-o-número-da-porta</i></td>
+            <td>Comando global que altera o contexto para o modo interaface - por exemplo, <strong><code>interface FastEthernet 0/1</code></strong>.</td>
+        </tr>
+        <tr>
+            <td><strong><code>hostname</code></strong> <i>nome</i></td>
+            <td>Comando global que ajusta o nome de servidor do switch, que também é usado como a primeira parte do prompt de comando do switch.</td>
+        </tr>
+        <tr>
+            <td><strong><code>exit</code></strong></td>
+            <td>Retorna ao modo anterior no modo de configuração.</td>
+        </tr>
+        <tr>
+            <td><strong><code>end</code></strong></td>
+            <td>Encerra o modo de configuração e retorna ao modo ativo de qualquer um dos submodos de configuração.</td>
+        </tr>
+        <tr>
+            <td><code>Ctrl+Z</code></td>
+            <td>Não é um comando, mas uma combinação de duas teclas que, se pressionadas juntas, têm a mesma função do comando <strong><code>end</code></strong>.</td>
+        </tr>
+        <tr>
+            <td><strong><code>login local</code></strong></td>
+            <td>Modo de configuração de console e vty. Avisa ao IOS para mostrar a tela de usuário e senha, a serem verificados com os comandos de configuração global <strong><code>username</code></strong> localmente configurados no switch ou roteador.</td>
+        </tr>
+        <tr>
+            <td><strong><code>username</code></strong> <em>nome-usuário</em> <strong><code>password</code></strong> <em>senha-do-usuário</em></td>
+            <td>Comando global. Define um de múltiplos nomes de usuário possíveis e senhas associadas, usados para autenticação do usuário. Usado quando o comando de configuração de linha <strong><code>login local</code></strong> for usado.</td>
+        </tr>
+        <tr>
+            <td><strong><code>crypto key generate rsa [modulus</code></strong> 360..2048<strong><code>]</code></strong></td>
+            <td>Comando global. Cria e armazena (em uma localização escondida na memória flash) as chaves neessárias pelo SSH.</td>
+        </tr>
+        <tr>
+            <td><strong><code>transport input {telnet | ssh | all | none}</code></strong></td>
+            <td>Modo de configuração de linha vty. Define se o acesso Telnet e/ou SSH é permitido no switch. Ambos os valores podem ser configurados em um comando para permitir tanto o acesso Telnet quanto o SSH (padrão).</td>
+        </tr>
+    </table>
+    
+    <table class="tabela-comandos">
+        <thead>
+            <th scope="col">Comando</th>
+            <th scope="col">Modo/Motivo/Descrição</th>
+        </thead>
+        <tr>
+            <td><strong><code>enable secret</code></strong> <em>senha-de-password</em></td>
+            <td>Comando global. Ajusta a senha do swich que é necessária par que qualquer usuário acesse o modo enable.</td>
+        </tr>
+        <tr>
+            <td><strong><code>history size</code></strong> <em>comprimento</em></td>
+            <td>Modo de configuração de linha. Define o número de comandos mantidos no buffer de históricos, para depois serem usados, para usuários de tais linhas.</td>
+        </tr>
+        <tr>
+            <td><strong><code>logging synchronous</code></strong></td>
+            <td>Modo de console ou vty. Avisa ao IOS para enviar mensagens de log para o usuário em intervalos naturais de comandos, em vez de interromper uma linha de resultado.</td>
+        </tr>
+        <tr>
+            <td><strong><code>[no] logging console</code></strong></td>
+            <td>Comando global que desativa ou ativa a exibição de mensagens no console.</td>
+        </tr>
+        <tr>
+            <td><strong><code>exec-timeout minutes</code></strong> <em>[segundos]</em></td>
+            <td>Modo de console ou vty. Ajusta o cronômetro de inatividade para que, depois de definido o período de inatividade, o IOS feche a sessão do usuário atual.</td>
+        </tr>
+    </table>
+    
+    <table class="tabela-comandos">
+        <thead>
+            <th scope="col">Comando</th>
+            <th scope="col">Modo/Motivo/Descrição</th>
+        </thead>
+        <tr>
+            <td><code><strong>switchport mode {access | trunk}</strong></code></td>
+            <td>Comando de modo de configuração de interface que comanda o switch a sempre ser uma porta de acesso ou sempre ser uma porta trunk ou para negociar o tipo a se tornar.</td>
+        </tr>
+        <tr>
+            <td><code><strong>switchport port-security mac-address</strong> <em>endereço-mac</em></code></td>
+            <td>Comando de modo de configuraÇão de interface que adicona estaticamente um endereço MAC específico na lista de endereços MAC permitidos.</td>
+        </tr>
+        <tr>
+            <td><code><strong>switchport port-security mac-address sticky</strong></code></td>
+            <td>Subcomando de interface que pede que o switch aprenda os endereços MAC na interface e os adiciona à configuração da interface como endereços MAC seguros.</td>
+        </tr>
+        <tr>
+            <td><code><strong>switchport port-security maximum</strong> <em>valor</em></code></td>
+            <td>Subcomando de interface que ajusta o número máximo de endereços MAC seguros e estáticos que podem ser designados em uma única interface.</td>
+        </tr>
+        <tr>
+            <td><code><strong>switchport port-security violation {protect | restrict | shutdown}</strong></code></td>
+            <td>Subcomando de interface que informa ao switch o que fazer se um endereço MAC não autorizado tentar acessar a rede através de uma porta de switch segura.</td>
+        </tr>
+        <tr>
+            <td><code><strong>errdisable recovery cause psecure-violation</strong></code></td>
+            <td>Comando de configuração global que ativa automaticamente a recuperação por estado de err-disabled em portas que atingem esse estato após violação de segurança.</td>
+        </tr>
+        <tr>
+            <td><code><strong>errdisable recovery interval</strong> <em>segundos</em></code></td>
+            <td>Comando glogal que parametriza o delay, em segundos, antes que o switch tente recuperar uma interface no modo err-disabled, independente da razão pela qual a interface entrou nesse estado.</td>
+        </tr>
+        <tr>
+            <td><code><strong>shutdown</strong></code> <br><code><strong>no shutdown</strong></code></td>
+            <td>Subcomando de interface que administrativamente desabilita e habilita uma respectiva interface.</td>
+        </tr>
+    </table>
+    
+    <table class="tabela-comandos">
+        <thead>
+            <th scope="col">Comando</th>
+            <th scope="col">Modo/Motivo/Descrição</th>
+        </thead>
+        <tr>
+            <td><strong><code>show running-config</code></strong></td>
+            <td>Lista a configuração em uso.</td>
+        </tr>
+        <tr>
+            <td><strong><code>show interfaces status</code></strong></td>
+            <td>Lista um resultado por interface, notando a descrição, estado operacional e ajustes para o duplex e velocidade em cada interface.</td>
+        </tr>
+        <tr>
+            <td><code><strong>show port-security interface </strong> <em>tipo-de-interface</em></code></td>
+            <td>Lista ajustes de configuraçãi de segurança da porta da interface e o status de segurança operacional.</td>
+        </tr>
+        <tr>
+            <td><code><strong>show port-security</strong></code></td>
+            <td>Lista em uma linha por interface o sumário de parâmetros de port security para quaiquer interfaces que estejam ativas.</td>
+        </tr>
+    </table>
+</section>
+
+
+<section>
+    <h1>Endereços IP</h1>
+    <table class="tabela-complementar">
+        <thead>
+            <th scope="col"><strong>Dispositivo</strong></th>
+            <th scope="col"><strong>Endereço IP	</strong></th>
+            <th scope="col"><strong>Máscara de Subrede	</strong></th>
+            <th scope="col"><strong>Default Gateway</strong></th>
+        </thead>
+        <tr>
+            <td>SW-01</td>
+            <td>192.168.1.251</td>
+            <td>255.255.255.0</td>
+            <td>192.168.1.1</td>
+        </tr>
+        <tr>
+            <td>SW-02</td>
+            <td>192.168.1.252</td>
+            <td>255.255.255.0</td>
+            <td>192.168.1.1</td>
+        </tr>
+        <tr>
+            <td>SW-03</td>
+            <td>192.168.1.253</td>
+            <td>255.255.255.0</td>
+            <td>192.168.1.1</td>
+        </tr>
+        <tr>
+            <td>Server Z</td>
+            <td>192.168.1.3</td>
+            <td>255.255.255.0</td>
+            <td>192.168.1.1</td>
+        </tr>
+        <tr>
+            <td>PC A</td>
+            <td>192.168.1.5</td>
+            <td>255.255.255.0</td>
+            <td>192.168.1.1</td>
+        </tr>
+        <tr>
+            <td>PC B</td>
+            <td>192.168.1.10</td>
+            <td>255.255.255.0</td>
+            <td>192.168.1.1</td>
+        </tr>
+        <tr>
+            <td>PC C</td>
+            <td>192.168.1.15</td>
+            <td>255.255.255.0</td>
+            <td>192.168.1.1</td>
+        </tr>
+        <tr>
+            <td>PC D</td>
+            <td>192.168.1.20</td>
+            <td>255.255.255.0</td>
+            <td>192.168.1.1</td>
+        </tr>
+        <tr>
+            <td>PC E</td>
+            <td>192.168.1.21</td>
+            <td>255.255.255.0</td>
+            <td>192.168.1.1</td>
+        </tr>
+        <tr>
+            <td>PC F</td>
+            <td>192.168.1.22</td>
+            <td>255.255.255.0</td>
+            <td>192.168.1.1</td>
+        </tr>
+        <tr>
+            <td>PC G</td>
+            <td>192.168.1.23</td>
+            <td>255.255.255.0</td>
+            <td>192.168.1.1</td>
+        </tr>
+    </table>
+</section>
+
+<section id="tarefas_lab">
+    <h1>Tarefas do Lab</h1>
+    <h2>Tarefa 1: Monte a Topologia</h2>
+    <ol>
+        <li>Insira os 03 Switches (modelo 2960), o servidor (server) e os 07 computadores (qualquer dos modelos disponíveis) no simulador.</li>
+        <li>Conecte os cabos adequados nas interfaces indicadas pela topologia e verifique se todas as conexões tiveram sucesso.</li>
+    </ol>
+    <h2>Tarefa 2: Configure os computadores e o servidor</h2>
+    <ol>
+        <li>Configure corretamente: o endereço IP do computador, sua máscara e seu default-gateway.</li>
+        <li>Configure corretamente também o endereço IP do servidor, sua máscara e seu default-gateway.</li>
+        <li>Você pode se certificar de que essas configurações estão corretas aplicando o comando <code>ipconfig</code> no prompt de comando do Windows da máquina virtual.</li>
+    </ol>
+    <h2>Tarefa 3: Configure os Switches</h2>
+    <ol>
+        <li>Inicie pela configuração do Switch SW-01. O mais recomendado é que você só faça as demais configurações dos outros switches uma vez que tenha terminado o primeiro. Sempre que necessário utilize a ajuda no terminal de comandos CLI do equipamento, ou complete comandos com a tecla 'Tab'.</li>
+        <ol>
+            <li>A partir do modo de Configuração Global, configure o hostname do equipamento como '<code>SW-01</code>'.</li>
+            <li>Coloque uma senha '<code>admin</code>' para entrar no modo enable do equipamento.</li>
+            <li>Através do uso do comando <code>no ip domain-lookup</code> para desabilitar procuras por nomes de domínio</li>
+            <li>Habilite o comando <code>logging synchronous</code> no SW-01.</li>
+            <li>Configures dois pares de usuário/senha no equipamento, um deles deve ser rafael/professor, e o outro a sua escolha.</li>
+            <li>Faça com que as linhas de acesso virtual (vty) aceitem apenas conexões do protocolo SSH.</li>
+            <li>Configure os equipamentos para que as conexões remotas via console/vty se encerrem com 8min00s de inatividade.</li>
+            <li>Configure os respectivos endereço IP, máscara e default-gateway do SW-01, para que possa ser possível acessá-lo por sua interface VLAN virtual. Não se esqueça de fazer com que essa interface esteja no estado <code>up/up</code>.</li>
+            <li>Configure a porta <code>Gig0/2</code> para que esteja permanentemente em modo de acesso e aceite unicamente frames originados pelo MAC do Servidor Z. Caso haja violação dessa regra o switch deve desabilitar imediatamente a porta.</li>
+            <li>A porta <code>Gig0/2</code> do SW-01 também deve estar configurada sem autonegiação, de maneira a garantir sempre uma conexão de 1 Gbps. Adicione uma descrição a essa interface para poder localizá-la mais facilmente na configuração.</li>
+        </ol>
+        <br>
+</section>
+
+</main>
+
+<footer>
+    <p>All content copyright &copy; 2022, Rafael Moraes.</p>
+</footer>
+
+</body>
+</html>

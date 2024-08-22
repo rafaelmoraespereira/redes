@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Laboratório de Redes envolvendo Switches">
+    <meta name="keywords" content="lab ccna redes network switch">
+    <meta http-equiv="author" content="Rafael de Moraes">
+    <link rel="stylesheet" href="../styles/style-labs.css">
+    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+    <title>LAB B02-C01</title>
+</head>
+<body>
+
+<header>
+    <nav>
+        <ul>
+            <li><a href="../index.html">Menu</a></li>
+            <li><a href="lab_b02-c02.html">Próximo</a></li>
+            <li><a href="http://www.github.com/rafaelmoraespereira" rel="external" target="_blank">Sobre</a></li>
+        </ul>
+    </nav>
+    <h1>
+        <h2>LABORATÓRIO DE REDES B02-C01</h2>
+        <p>Vamos colocar a mão na massa! Chegou a hora da prática de laboratório de redes.</p>
+    </h1>
+</header>
+
+<!-- INÍCIO -->
+<main>
+
+<section>
+    <h1>Introdução</h1>
+    <p>Esse laboratório faz parte das aulas do Capítulo 01 - Utilizando a Interface de Linha de Comandos. As aulas teóricas que fundamentam essa prática podem ser encontradas nos links abaixo:</p>
+    <ul>
+        <li><a href="https://www.youtube.com/watch?v=xeZ3ZbME8PM" target="_blank" rel="external">C01 - Parte 1/4 - Utilizando a Interface de Linha de Comandos</a></li>
+        <li><a href="https://www.youtube.com/watch?v=deqc-Pp4zQ0" target="_blank" rel="external">C01 - Parte 2/4 - Utilizando a Interface de Linha de Comandos</a></li>
+        <li><a href="https://www.youtube.com/watch?v=Jv5VpFyTlDY&t" target="_blank" rel="external">C01 - Parte 3/4 - Utilizando a Interface de Linha de Comandos</a></li>
+        <li><a href="https://www.youtube.com/watch?v=UZF5Iox817g&t" target="_blank" rel="external">C01 - Parte 4/4 - Utilizando a Interface de Linha de Comandos</a></li>
+        <li><a href="https://youtu.be/0WWEomylEW4" target="_blank" rel="external">Solução do LAB B02-C01</a></li>
+    </ul>
+</section>
+
+<section>
+    <h1>Objetivo</h1>
+    <p>Monte corretamente a topologia da rede sem perder de vista o uso correto dos tipos de cabos em cada uma das conexões (straight-through, crossover, rollover e etc). Verifique também se as portas utilizadas (GigabitEthernet e FastEthernet) seguem as especificações da topologia, e se todas as conexões ficaram corretas (links verdes), até que todos os Switches e PCs estejam conectados. Após isso faça as configurações requeridas na parte de Tarefas.</p>
+</section>
+
+<section id="topologia_lab">
+    <h1>Topologia do Lab</h1>
+    <figure>
+        <img src="../images/labs/b02-lab01-topologia.png" alt="Topologia do Lab 01" title="Topologia C01 Utilizando a Interface de Linha de Comandos - Lab 1" width=80% />
+        <figcaption>Topologia do Lab 01</figcaption>
+    </figure>
+</section>
+
+<section id="sumario">
+<h1>Sumário de Comandos</h1>
+<table class="tabela-comandos">
+    <thead>
+        <th scope="col">Comando</th>
+        <th scope="col">Modo e Propósito</th>
+    </thead>
+    <tr>
+        <td><code><b>line console 0</b></code></td>
+        <td>Comando global que muda o contexto para o modo de configuração de console.</td>
+    </tr>
+    <tr>
+        <td><b><code>vty 0 15</code></b></td>
+        <td>Comando global que muda o contexto para o modo de configuração vty para o escolo de linhas vty no comando.</td>
+    </tr>
+    <tr>
+        <td><b><code>login</code></b></td>
+        <td>Modo de configuração de linha (console e vty). Diz ao IOS para pedir uma senha.</td>
+    </tr>
+    <tr>
+        <td><b><code>password</code> </b><i>valor-password</i></td>
+        <td>Modo de configuração de linha (console e vty). Lista a senha necessária se o comando <b>login</b> estiver configurado.</td>
+    </tr>
+    <tr>
+        <td><b><code>interface</code></b> <i>digitar-o-número-da-porta</i></td>
+        <td>Comando global que altera o contexto para o modo interaface - por exemplo, <b>interface FastEthernet 0/1</b>.</td>
+    </tr>
+    <tr>
+        <td><b><code>hostname</code></b> <i>nome</i></td>
+        <td>Comando global que ajusta o nome de servidor do switch, que também é usado como a primeira parte do prompt de comando do switch.</td>
+    </tr>
+    <tr>
+        <td><b><code>exit</code></b></td>
+        <td>Retorna ao modo anterior no modo de configuração.</td>
+    </tr>
+    <tr>
+        <td><b><code>end</code></b></td>
+        <td>Encerra o modo de configuração e retorna ao modo ativo de qualquer um dos submodos de configuração.</td>
+    </tr>
+    <tr>
+        <td><code>Ctrl+Z</code></td>
+        <td>Não é um comando, mas uma combinação de duas teclas que, se pressionadas juntas, têm a mesma função do comando <b>end</b>.</td>
+    </tr>
+</table>
+</section>
+
+<section>
+    <h1>Endereços IP</h1>
+    <table class="tabela-complementar">
+        <thead>
+            <th scope="col"> Dispositivo </th>
+            <th scope="col"> Endereço IP </th>
+            <th scope="col"> Máscara de Subrede </th>
+            <th scope="col"> Default Gateway </th>
+        </thead>
+        <tr>
+            <td> PC A </td>
+            <td> 192.168.0.5 </td>
+            <td> 255.255.255.0 </td>
+            <td> 192.168.0.1 </td>
+        </tr>
+        <tr>
+            <td> PC B </td>
+            <td> 192.168.0.6 </td>
+            <td> 255.255.255.0 </td>
+            <td> 192.168.0.1 </td>
+        </tr>
+        <tr>
+            <td> PC C </td>
+            <td> 192.168.0.7 </td>
+            <td> 255.255.255.0 </td>
+            <td> 192.168.0.1 </td>
+        </tr>
+        <tr>
+            <td> PC D </td>
+            <td> 192.168.0.8 </td>
+            <td> 255.255.255.0 </td>
+            <td> 192.168.0.1 </td>
+        </tr>
+        <tr>
+            <td> PC E </td>
+            <td> 192.168.0.9 </td>
+            <td> 255.255.255.0 </td>
+            <td> 192.168.0.1 </td>
+        </tr>
+        <tr>
+            <td> PC F </td>
+            <td> 192.168.0.10 </td>
+            <td> 255.255.255.0 </td>
+            <td> 192.168.0.1 </td>
+        </tr>
+    </table>
+</section>
+
+<section id="tarefas_lab">
+<h1>Tarefas do Lab</h1>
+<h2>Tarefa 1: Monte a Topologia</h2>
+    <ol>
+        <li>Insira os 03 Switches (modelo 2960) e os 07 computadores (qualquer dos modelos disponíveis) no simulador.</li>
+        <li>Atente para os diferentes tipos de cabos requeridos (straight-through, crossover, rollover e etc). Faz alguma diferença cabos diretos ou cruzados na interligação dos switches nessa topologia? Pense sobre isso.</li>
+        <li>Verifique se todos os links funcionaram corretamente, sinalizados com a luz verde.</li>
+        <li>Configure o endereço IP, máscara e default-gateway dos PCs conforme a tabela.</li>
+        <li>Em muitos casos é conveniente usar a ferramenta de notas do Cisco Packet Tracer, o que facilita a leitura da topologia, como nomear as interfaces que estão sendo utilizadas.</li>
+    </ol>
+    <h2>Tarefa 2: Configure os Switches</h2>
+        <ol>
+            <li>Inicie pela configuração do Switch SW-01. O mais recomendado é que você só faça as demais configurações dos outros switches uma vez que tenha terminado o primeiro. Sempre que necessário utilize a ajuda no terminal de comandos CLI do equipamento, ou complete comandos com a tecla 'Tab'.</li>
+                <ol>
+                    <li>Realize as configurações através do terminal de console do PC Z.</li>
+                    <li>A partir do modo de Configuração Global, configure o hostname do equipamento como '<code>SW-01</code>'.</li>
+                    <li>Coloque uma senha '<code>admin</code>' para entrar no modo enable do equipamento.</li>
+                    <li>Coloque uma senha de acesso local (console)                     <li>Coloque uma senha para acesso remoto (linhas vty) pelo protocolo Telnet '<code>ifremoto</code>' no equipamento.</li>
+                    <li>Através do comando <code>show running-config</code>, confira se as configurações aplicadas estão corretas.</li>
+                    <li>Salve as configurações do equipamento (<code>startup-config</code>) ao final.</li>
+                </ol>
+            <li>Repita os procedimentos acima, alterando o respectivo hostname, para o Switch SW-02.</li>
+            <li>Repita os procedimentos acima, alterando o respectivo hostname, para o Switch SW-03.</li>
+</section>
+
+</main>
+
+<footer>
+    <p>All content copyright &copy; 2022, Rafael Moraes.</p>
+</footer>
+</body>
+</html>
