@@ -1,5 +1,5 @@
 # PLANEJAMENTO DA DISCIPLINA REDES DE COMPUTADORES
-
+t
 ## BIMESTRE I
 
 - Capítulo 00 - Aula Inaugural
